@@ -9,32 +9,47 @@
 	<article id = 'board'>
 		<article id = 'player2'>
 			<div class = 'stats  holder'>
-				<p id= 'p2Name'>player 2</p>
-				<div id = 'p2Stats'>player 2 stats
-					<button>attack</button>
-					<button>defend</button>
-					<button>special</button>
-				</div>
-			</div>
+				<p id= 'p2Name'>computer</p>
+				<div id = 'p2Stats'>
+					<table>
+						<tr>
+							<td>Health Points</td>
+							<td id = 'hp2'>x</td>
+						</tr>
+						<tr>
+							<td>Atack Points</td>
+							<td id = 'ap2'>x</td>
+						</tr>
+						<tr>
+							<td>element</td>
+							<td id = 'element2'>x</td>
+						</tr>
+					</table>
 			<img id = "p2Pokemon" 
 			class = 'pokePic holder'
-			alt = 'snorlax'>
+			alt = 'Players pokemon'>
 			</img>
+					<div class = 'moves'>
+						<button>attack</button>
+						<button>defend</button>
+						<button>special</button>
+					</div>
+				</div>
+			</div>
 		</article>
 		<div id= 'arenaMiddle'></div>
 		<article id = 'player1'>
-			<div class = 'stats holder'>
-				<p id = 'p1Name'>player 1</p>
-				<div id = "p1Stats">player 1 stats
-					<button>attack</button>
-					<button>defend</button>
-					<button>special</button>
-				</div>
-			</div>
+			<p id = 'p1Name'>player 1</p>
 			<img id = 'p1Pokemon' 
 			class = 'pokePic holder'
 			alt = 'Player 1 pokemon'></img>
-		</article>
+			<div id = "p1Stats"
+			class = 'stats holder'>player 1 stats
+				<button>attack</button>
+				<button>defend</button>
+				<button>special</button>
+			</div>
+					</article>
 	</article>
 	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src = '/js/pokedex.js'></script>

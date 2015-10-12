@@ -10,7 +10,8 @@ var pokemon =
     "health": 45,
     "speed": 45,
     "weight": 69,
-    "height": 7
+    "height": 7,
+    "element": "Grass"
   },
   {
     "id": 2,
@@ -46,7 +47,8 @@ var pokemon =
     "health": 39,
     "speed": 65,
     "weight": 85,
-    "height": 6
+    "height": 6,
+    "element": "Fire"
   },
   {
     "id": 5,
@@ -82,7 +84,8 @@ var pokemon =
     "health": 44,
     "speed": 43,
     "weight": 90,
-    "height": 5
+    "height": 5,
+    "element": "Water"
   },
   {
     "id": 8,
@@ -298,7 +301,8 @@ var pokemon =
     "health": 35,
     "speed": 90,
     "weight": 60,
-    "height": 4
+    "height": 4,
+    "element": "Thunder"
   },
   {
     "id": 26,
