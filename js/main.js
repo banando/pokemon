@@ -7,6 +7,7 @@ var p1Choice;
 var p1stats={};
 var p2stats = {};
 var restart = false;
+var $text = $("#textBox");
 //cpu chosen at 'random'
 var cpuChoice;
 //initialize pictures to choice options
@@ -35,6 +36,9 @@ var chooseCpu = function(){
 	p2stats.element= pokemon[cpuChoice].element;
 	p2stats.ap= pokemon[cpuChoice].attack/2;
 	p2stats.names = pokemon[cpuChoice].name;
+	p2stats.player = 2;
+	p2stats.special = 1;
+	p2stats.block = 1;
 	$('#hp2').html(pokemon[cpuChoice].health*2);
 	$('#ap2').html(pokemon[cpuChoice].attack/2);
 	$("#element2").html(pokemon[cpuChoice].element);
@@ -68,9 +72,16 @@ var battle = function(){
 			p2stats.ap /= 2;
 			useSpecial = true;
 		}
-		renderPlayer2();
-		if(p2stats.hp<1){
-			alert("Player 1 wins!");
+		renderPlayers();
+		isWinner(p2stats, p1stats);
+		setTimeout(cpuMove,1000);
+	if(restart){return false;}
+	})
+}
+// check winner funtion
+var isWinner = function(enemy, attacker){
+	if(enemy.hp<1){
+			$text.html("Player " + attacker.player + " is the winner!");
 			if(confirm('Do you want to play again?')){
 				//reload game
 				console.log("this is happening")
@@ -83,10 +94,8 @@ var battle = function(){
 				//add a button somewhere to play again
 			}
 		}
-		setTimeout(cpuMove,1000);
-	if(restart){return false;}
-	})
 }
+
 //valid pokemon choices are 1,3,6, or 24.
 // Initiate game and restart game
 var playerChoose= function(){
@@ -128,6 +137,7 @@ var renderPlayerInitial = function(){
 	p1stats.hp = pokemon[p1Choice].health*2;
 	p1stats.ap = pokemon[p1Choice].attack/2;
 	p1stats.names = pokemon[p1Choice].name;
+	p1stats.player = 1;
 	$('#p1Name').html(pokemon[p1Choice].name);
 	$('#p1Pokemon').css('background: ' + pokemon[p1Choice].image_url);
 	$('#p1Pokemon').attr('src',pokemon[p1Choice].image_url);
@@ -138,15 +148,15 @@ var renderPlayerInitial = function(){
 }
 
 //shortcut to render each player
-var renderPlayer = function(){
+var renderPlayers = function(){
 	$('#hp1').html(p1stats.hp);
-}
-var renderPlayer2 = function(){
 	$('#hp2').html(p2stats.hp);
-	console.log(p2stats)
 }
 
-
+var battleCalculations = function(attacker, enemy){
+	enemy.hp -= 5*attacker.ap*attacker.special*enemy.block/enemy.defense;
+	
+}
 //special should not be used twice in a row
 //when used, make button disabled
 //enable again when any other move is used within that move.
@@ -156,20 +166,20 @@ var useSpecial;
 var cpuMove= function(){
 	var x = Math.random();
 	//resets attack in case defense was used
-	console.log(p1Choice);
 	p1stats.ap = pokemon[p1Choice].attack/2;
 	if(x<.33){
 		p1stats.hp -= p2stats.ap;
-		console.log(p2stats.names + " used attack");
+		$text.html("Gary's " + p2stats.names + " used attack");
 	}
 	else if(x<.66){
 		p1stats.hp -= p2stats.ap*1.5;
-		console.log(p2stats.names + " used special attack");
+		$text.html("Gary's " + p2stats.names + " used special attack");
 	}
 	else {
 		p1stats.ap /= 2;
-		console.log(p2stats.names + " used defense");
+		$text.html("Gary's " + p2stats.names + " used defense");
 	}
-	renderPlayer();
+	renderPlayers();
+	isWinner(p1stats, p2stats);
 }
 battle();
