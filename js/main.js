@@ -16,7 +16,7 @@ $("#squirtle").attr('src', pokemon[6].image_url);
 $("#charmander").attr('src', pokemon[3].image_url);
 $("#bulbasaur").attr('src', pokemon[0].image_url);
 
-var battle = function(){
+/*var battle = function(){
 
 	$("#p1Moves").on('click', 'button', function(evt){
 //need to tweak to account for special and defense variable
@@ -51,6 +51,38 @@ var battle = function(){
 		setTimeout(cpuMove,2000);
 	})
 }
+*/
+// battle is currently player 1 turns
+var battle = function(){
+
+	$("#p1Moves").on('click', 'button', function(evt){
+		var move = $(evt.target).html();
+		p2stats.ap= pokemon[cpuChoice].attack
+		if(move==="attack"){
+			battleCalculations(p1stats, p2stats);
+			$text.html("Your " + p1stats.names + " used attack");
+			$("#sp1").attr("disabled", false);
+
+
+		}
+		else if(move === "special"){
+			p1stats.special = 2;
+			battleCalculations(p1stats,p2stats);
+			$("#sp1").attr("disabled", true)
+			$text.html("Your " + p1stats.names + " used special attack");
+		}
+		else {
+			p1stats.block = .25;
+			$text.html("Your " + p1stats.names + " used defend");
+			$("#sp1").attr("disabled", false);
+
+		}
+		renderPlayers();
+		isWinner(p2stats, p1stats)
+		setTimeout(cpuMove,2000);
+	})
+}
+
 // check winner funtion
 var isWinner = function(enemy, attacker){
 	if(enemy.hp<1){
@@ -119,16 +151,17 @@ var chooseCpu = function(){
 		cpuChoice= 24;
 	};
 	//input the stats value in table for comp/player2
-	p2stats.hp= pokemon[cpuChoice].health*2;
+	p2stats.hp= pokemon[cpuChoice].health;
 	p2stats.element= pokemon[cpuChoice].element;
-	p2stats.ap= pokemon[cpuChoice].attack/2;
+	p2stats.ap= pokemon[cpuChoice].attack;
 	p2stats.names = pokemon[cpuChoice].name;
 	p2stats.player = 2;
 	p2stats.special = 1;
 	p2stats.block = 1;
-	$('#hp2').html(pokemon[cpuChoice].health*2);
-	$('#ap2').html(pokemon[cpuChoice].attack/2);
-	$("#element2").html(pokemon[cpuChoice].element);
+	p2stats.defense = pokemon[cpuChoice].defense;
+	$('#hp2').html(pokemon[cpuChoice].health);
+	$('#ap2').html(pokemon[cpuChoice].attack);
+	$("#df2").html(pokemon[cpuChoice].defense);
 	$('#p2Pokemon').attr('src', pokemon[cpuChoice].image_url);
 	$('#p2Name').html(pokemon[cpuChoice].name);
 	$text.html("Player 1's turn")
@@ -138,30 +171,35 @@ var chooseCpu = function(){
 playerChoose();
 var renderPlayerInitial = function(){
 // input stats for player 1
-	p1stats.hp = pokemon[p1Choice].health*2;
-	p1stats.ap = pokemon[p1Choice].attack/2;
+	p1stats.hp = pokemon[p1Choice].health;
+	p1stats.ap = pokemon[p1Choice].attack;
 	p1stats.names = pokemon[p1Choice].name;
 	p1stats.player = 1;
+	p1stats.special = 1;
+	p1stats.defense = pokemon[p1Choice].defense;
+	p1stats.block = 1;
 	$('#p1Name').html(pokemon[p1Choice].name);
 	$('#p1Pokemon').css('background: ' + pokemon[p1Choice].image_url);
 	$('#p1Pokemon').attr('src',pokemon[p1Choice].image_url);
-	$('#hp1').html(pokemon[p1Choice].health*2).value;
-	$('#ap1').html(pokemon[p1Choice].attack/2).value;
-	$("#element1").html(pokemon[p1Choice].element);
+	$('#hp1').html(pokemon[p1Choice].health);
+	$('#ap1').html(pokemon[p1Choice].attack);
+	$("#df1").html(pokemon[p1Choice].defense);
 	useSpecial = true;
 
 }
 
 //shortcut to render each player
 var renderPlayers = function(){
-	$('#hp1').html(p1stats.hp + " / " + pokemon[p1Choice].health*2);
-	$('#hp2').html(p2stats.hp + " / " + pokemon[cpuChoice].health*2);
+	$('#hp1').html(p1stats.hp + " / " + pokemon[p1Choice].health);
+	$('#hp2').html(p2stats.hp + " / " + pokemon[cpuChoice].health);
 	$("#ap1").html(p1stats.ap);
-	$("#ap2").html(p2stats.ap)
+	$("#ap2").html(p2stats.ap);
+
 }
 // working on better battle algorithm 
 var battleCalculations = function(attacker, enemy){
-	var damage = Math.floor(5*attacker.ap*attacker.special*enemy.block/enemy.defense);
+	var damage = Math.floor(5*attacker.ap*attacker.special*enemy.block / enemy.defense);
+	console.log( attacker, damage);
 	enemy.hp -= damage;
 	attacker.special=1;
 	enemy.block=1;
@@ -177,17 +215,18 @@ var useSpecial;
 var cpuMove= function(){
 	var x = Math.random();
 	//resets attack in case defense was used
-	p1stats.ap = pokemon[p1Choice].attack/2;
+	p1stats.ap = pokemon[p1Choice].attack;
 	if(x<.33){
-		p1stats.hp -= p2stats.ap;
+		battleCalculations(p2stats, p1stats);
 		$text.html("Gary's " + p2stats.names + " used attack");
 	}
 	else if(x<.66){
-		p1stats.hp -= p2stats.ap*1.5;
+		p2stats.ap *= 2;
+		battleCalculations(p2stats, p1stats);
 		$text.html("Gary's " + p2stats.names + " used special attack");
 	}
 	else {
-		p1stats.ap /= 2;
+		p2stats.block = .25;
 		$text.html("Gary's " + p2stats.names + " used defense");
 	}
 	renderPlayers();
