@@ -8,18 +8,18 @@ This is an ode to the old school pokemon games played on portable gaming devices
 
 ###mvp
 - [x] As a user I want to be able to choose my pokemon
-- [x] As a user I want to be able to preform an attack
 - [x] As a user I want to see each pokemons stats
-- [x] As a user I want a set of moves to choose from
 - [x] As a user I want to see my pokemon
-- [ ] As a user I want to see the progress of the battle
-- [x] As a user I want to be able to play again
+- [x] As a user I want pikachu
+- [x] As a user I want a set of moves to choose from
+- [x] As a user I want to be able to preform an attack
 - [x] As a user I want to play agianst a cpu
-- [ ] As a user I want to play with another player
+- [x] As a user I want to be able to play again
 - [x] As a user I want to preform a regular attack
 - [x] As a user I want to preform special moves
+- [x] As a user I want to see the progress of the battle
+- [ ] As a user I want to play with another player
 - [ ] As a user I want some animation during battle
-- [x] As a user I want pikachu
 
 
 
@@ -29,15 +29,15 @@ This is an ode to the old school pokemon games played on portable gaming devices
 ###icebox
 - [ ] As a user I want elemental attributes to be considered
 - [ ] As a user I want more animation then just shaking
+- [ ] As a user I want easter eggs for pokemon
+- [ ] As a user I want some build up story
+- [ ] As a user I want intro and cut scenes
 - [ ] As a user I want ultimate attacks/ charge attarks
 - [ ] As a user I want items available
 - [ ] As a user I want a training mode
 - [ ] As a user I want to be able to switch pokemon during battle
 - [ ] As a user I want to be able to fight with 6 pokemon
-- [ ] As a user I want easter eggs for pokemon
 - [ ] As a user I want to see cut scenes
 - [ ] As a user I want a story mode
-- [ ] As a user I want intro and cut scenes
-- [ ] As a user I want some build up story
 
 

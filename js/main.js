@@ -44,37 +44,41 @@ var chooseCpu = function(){
 	$("#element2").html(pokemon[cpuChoice].element);
 	$('#p2Pokemon').attr('src', pokemon[cpuChoice].image_url);
 	$('#p2Name').html(pokemon[cpuChoice].name);
-
+	$text.html("Player 1's turn")
 };
 var battle = function(){
 
 	$("#p1Moves").on('click', 'button', function(evt){
-
+//need to tweak to account for special and defense variable
 		var move = $(evt.target).html();
+		//resets attack in case defense was used
+		p2stats.ap= pokemon[cpuChoice].attack/2
+		if(move==="attack"){
+			p2stats.hp -=p1stats.ap;
+			useSpecial = true;
+			$text.html("Your " + p1stats.names + " used attack");
+
+
+		}
+		else if(move === "special"){
+			p2stats.hp -=p1stats.ap*1.5
+			useSpecial = false
+			$text.html("Your " + p1stats.names + " used special attack");
+		}
+		else {
+			p2stats.ap /= 2;
+			useSpecial = true;
+			$text.html("Your " + p1stats.names + " used defend");
+		}
 		if(!useSpecial){
 			$("#sp1").prop('disabled', true);
 		}
 		else{
 			$("#sp1").prop('disabled', false);			
 		}
-		//resets attack in case defense was used
-		p2stats.ap= pokemon[cpuChoice].attack/2
-		if(move==="attack"){
-			p2stats.hp -=p1stats.ap;
-			useSpecial = true;
-
-		}
-		else if(move === "special"){
-			p2stats.hp -=p1stats.ap*1.5
-			useSpecial = false
-		}
-		else {
-			p2stats.ap /= 2;
-			useSpecial = true;
-		}
 		renderPlayers();
 		isWinner(p2stats, p1stats);
-		setTimeout(cpuMove,1000);
+		setTimeout(cpuMove,2000);
 	if(restart){return false;}
 	})
 }
@@ -122,7 +126,6 @@ var playerChoose= function(){
 			$("#board").css('display','');
 			renderPlayerInitial();
 			$(".choicePic").off();
-
 		}else {p1Choice[2];}
 
 	})
@@ -152,10 +155,10 @@ var renderPlayers = function(){
 	$('#hp1').html(p1stats.hp);
 	$('#hp2').html(p2stats.hp);
 }
-
+// working on better battle algorithm 
 var battleCalculations = function(attacker, enemy){
 	enemy.hp -= 5*attacker.ap*attacker.special*enemy.block/enemy.defense;
-	
+
 }
 //special should not be used twice in a row
 //when used, make button disabled
