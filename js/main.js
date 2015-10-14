@@ -8,9 +8,12 @@ var p1stats={};
 var p2stats = {};
 var restart = false;
 var $text = $("#textBox");
+var turn = true;
 //cpu chosen at 'random'
 var cpuChoice;
+
 //initialize pictures to choice options
+
 $("#pikachu").attr('src', pokemon[24].image_url);
 $("#squirtle").attr('src', pokemon[6].image_url);
 $("#charmander").attr('src', pokemon[3].image_url);
@@ -79,6 +82,8 @@ var battle = function(){
 		}
 		renderPlayers();
 		isWinner(p2stats, p1stats)
+
+		//this needs to only play in cpu mode, 2 player mode;
 		setTimeout(cpuMove,2000);
 	})
 }
@@ -159,6 +164,7 @@ var chooseCpu = function(){
 	p2stats.special = 1;
 	p2stats.block = 1;
 	p2stats.defense = pokemon[cpuChoice].defense;
+	p2stats.choice = cpuChoice;
 	$('#hp2').html(pokemon[cpuChoice].health);
 	$('#ap2').html(pokemon[cpuChoice].attack);
 	$("#df2").html(pokemon[cpuChoice].defense);
@@ -178,6 +184,7 @@ var renderPlayerInitial = function(){
 	p1stats.special = 1;
 	p1stats.defense = pokemon[p1Choice].defense;
 	p1stats.block = 1;
+	p1stats.choice = p1Choice;
 	$('#p1Name').html(pokemon[p1Choice].name);
 	$('#p1Pokemon').css('background: ' + pokemon[p1Choice].image_url);
 	$('#p1Pokemon').attr('src',pokemon[p1Choice].image_url);
@@ -210,7 +217,6 @@ var battleCalculations = function(attacker, enemy){
 //when used, make button disabled
 //enable again when any other move is used within that move.
 
-var useSpecial;
 
 var cpuMove= function(){
 	var x = Math.random();
@@ -232,4 +238,5 @@ var cpuMove= function(){
 	renderPlayers();
 	isWinner(p1stats, p2stats);
 }
+$("#restart").on('click', playerChoose());
 battle();

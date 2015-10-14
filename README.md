@@ -27,6 +27,7 @@ This is an ode to the old school pokemon games played on portable gaming devices
 
 
 ###icebox
+- [ ] As a user I want more pokemon
 - [ ] As a user I want elemental attributes to be considered
 - [ ] As a user I want more animation then just shaking
 - [ ] As a user I want easter eggs for pokemon

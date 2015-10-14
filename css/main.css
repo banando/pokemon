@@ -9,7 +9,8 @@ body {
 @font-face {
     font-family: gba;
     src: url('/assets/early GameBoy.ttf');
-    font-family: pokemon;
+}
+ @font-face { font-family: pokemon;
     src: url('/assets/Pokemon Hollow.ttf');
 }
 
