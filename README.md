@@ -20,7 +20,7 @@ This is an ode to the old school pokemon games played on portable gaming devices
 - [x] As a user I want to see the progress of the battle
 - [ ] As a user I want to play with another player
 - [ ] As a user I want some animation during battle
-
+- [ ] As a user I would like more strategy during a battle
 
 
 

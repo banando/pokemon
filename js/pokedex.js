@@ -1815,7 +1815,9 @@ var pokemon =
     "speed": 100,
     "weight": 40,
     "height": 4
-  },
+  }
+  ];
+/*
   {
     "id": 152,
     "name": "Chikorita",
@@ -8621,3 +8623,4 @@ var pokemon =
     "height": "nil"
   }
 ]
+*/
