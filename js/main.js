@@ -13,7 +13,8 @@ var activePokemonIndices = [
 	38,
 	11,
 	15,
-	51
+	51,
+	64
 ];
 
 var pokemon1 = {};
@@ -37,6 +38,7 @@ var readyPokemonForBattle = function(p1, p2) {
 	p2.ap = p2.attack;
 	p1.block = p2.block = 1;
 	p1.special = p2.special = 1;
+	p1.usedSpecial = p2.usedSpecial = false;
 };
 
 /* CACHE DOM REFERENCES */
@@ -58,8 +60,8 @@ var selectPokemon = function(evt) {
 	} else {
 		if (choosePokemonMode === 1) {
 			pokemon1 = pokemons[pokemonIndex];
-			console.log(this)
-			$(this).css("background", "grey")
+			$("#playerSelect span").first().html("2");
+			console.log("player 2 chooses");
 			choosePokemonMode = 2;
 		} else {
 			pokemon2 = pokemons[pokemonIndex];
@@ -75,7 +77,7 @@ var selectPokemon = function(evt) {
 /* RENDER */
 
 var renderPlayerChooseMode = function() {
-	$playerSelect.html("<h1>Choose your starting <span>Pokemon</span></h1>");
+	$playerSelect.html("<h1>Player <span>1</span> Choose your starting <span>Pokemon</span></h1>");
 
 	// build the html for each pokemon choice
 	for (var i = 0; i < activePokemonIndices.length; i++) {
@@ -154,24 +156,25 @@ $("#board").on('click', 'button', function(evt){
 		attacker = pokemon2;
 		enemy = pokemon1;
 	}
+	if (attacker.usedSpecial = true){
+		$("sp" + turn).attr("disabled", true)
+	}
 	if(move==="attack"){
 		battleCalculations(attacker, enemy);
 		$text.html("Your " + attacker.name + " used attack");
-		$("#sp1").attr("disabled", false);
-
+		attacker.usedSpecial = false
 
 	}
 	else if(move === "special"){
 		attacker.special = 2;
 		battleCalculations(attacker,enemy);
-		$("#sp1").attr("disabled", true)
 		$text.html("Your " + attacker.name + " used special attack");
+		attacker.usedSpecial = true;
 	}
 	else {
 		attacker.block = .25;
 		$text.html("Your " + attacker.name + " used defend");
-		$("#sp1").attr("disabled", false);
-
+		attacker.usedSpecial = false;
 	}
 	renderPlayers();
 	isWinner(enemy, attacker)
@@ -221,7 +224,8 @@ var playAgain= function(){
 			//reload game
 			$("#sp1").prop('disabled', false);
 			$("#p2Pokemon").attr("style", "");			
-			$("#p2Pokemon").attr("style", "");
+			$("#p1Pokemon").attr("style", "");
+			choosePokemonMode = 1;
 			renderPlayerChooseMode();
 			console.log("this is happening")
 		}
