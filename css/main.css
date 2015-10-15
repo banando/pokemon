@@ -1,6 +1,5 @@
 body {
 	text-align: center;
-	background: black;
 	background:  url('/assets/poke-background2.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -15,35 +14,94 @@ body {
 }
 
 #board , #plyerSelect{
-	max-width: 700px;
-	height: 700px;
+	max-width: 800px;
+	height: 600px;
 	border: 2px yellow solid;
-
+	position: relative;
 	margin: 0 auto;
 }
 .pokePic{
+	position: absolute;
 	height: 70%;
 	width: 45%;
 }
 #arenaMiddle {
-	display: block;
+	position: absolute;
+	top: 0;
+	display: block;	
 	width: 100%;
-	height: 60px;
+	height: 20%
 
 }
+#player2 {
+	position: absolute;
+	top: 20%;
+	width: 100%;
+	height: 40%;
+}
+#player1{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 40%;
+	} 
 #textBox{
 	font-family: gba;
 	background-image: url("/assets/pokemonTextBox.png");
 	background-size: contain;
 	background-repeat: no-repeat;;
-	padding-top: 10px;
-	width: 200px;
-	height: 50px;
-	margin: 20px auto;
+	position: absolute;
+	top: 5%;
+	left: 30%;
+	width: 40%;
+	height: 80%;
+	padding-top: 4%;
+	margin: 0 auto;
     color: darkslategray;
 }	
-#player1, #player2 {
-	height: 34%;
+#p2Name{
+	background: white;
+	position: absolute;
+	width: 20%;
+	left: 40%;
+}
+#stats2{
+	position: absolute;
+	left: 5%;
+	top: 15%;
+}
+#p2Moves{
+	position: absolute;
+	right: 15%;
+	top: 18%
+}
+#p2Pokemon{
+	position: absolute;
+	top: 45%;
+	right: 0;
+	
+}
+#p1Name{
+	position: absolute;
+	bottom: 5%;
+	width: 20%;
+	background: white;
+	left: 40%;
+}
+#stats1{
+	position: absolute;
+	right: 5%;
+	bottom: 5%;
+}
+#p1Moves{
+	position: absolute;
+	left: 15%;
+	bottom: 28%;
+}
+#p1Pokemon{
+	position: absolute;
+	left: 0;
+	bottom: 45%
 }
 div{
 	display: inline;
@@ -70,29 +128,15 @@ tbody{
 .moves{
 	display: block;
 }
-#playerSelect{
-	background: rgba(220,200,200, .5);
-	z-index: -1;
-	position: fixed;
-}
-.choicePic{
-	width: 100px;
-}
+
+
 .selection td{
 	width: 90px;
 }
 .selection{
 	padding-bottom: 0;
 }
-#p2pokemon{
-	float: right;
-}
-#p1Pokemon{
-	float: left;
-}
-#player2{
-	padding-top: 90px;
-}
+
 span{
 	font-family: pokemon;
 }

@@ -66,6 +66,7 @@ var selectPokemon = function(evt) {
 		} else {
 			pokemon2 = pokemons[pokemonIndex];
 			choosePokemonMode = false;
+			$playerSelect.css('display', 'none')
 		}
 	}
 
