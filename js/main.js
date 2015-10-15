@@ -10,7 +10,10 @@ var activePokemonIndices = [
 	6,
 	3,
 	0,
-	38
+	38,
+	11,
+	15,
+	51
 ];
 
 var pokemon1 = {};
@@ -18,7 +21,7 @@ var pokemon2 = {};
 var turn = 1;
 
 var choosePokemonMode = 1;
-var cpuBattleMode = true;
+var cpuBattleMode = false;
 
 /* HELPER / ACTION FUNCTIONS */
 
@@ -31,7 +34,9 @@ var readyPokemonForBattle = function(p1, p2) {
 	p1.hp = p1.health;
 	p2.hp = p2.health;
 	p1.ap = p1.attack;
-	p1.ap = p1.attack;
+	p2.ap = p2.attack;
+	p1.block = p2.block = 1;
+	p1.special = p2.special = 1;
 };
 
 /* CACHE DOM REFERENCES */
@@ -53,6 +58,8 @@ var selectPokemon = function(evt) {
 	} else {
 		if (choosePokemonMode === 1) {
 			pokemon1 = pokemons[pokemonIndex];
+			console.log(this)
+			$(this).css("background", "grey")
 			choosePokemonMode = 2;
 		} else {
 			pokemon2 = pokemons[pokemonIndex];
@@ -112,6 +119,12 @@ var renderPlayers = function(){
 	$('#hp2').html(pokemon2.hp + " / " + pokemon2.health);
 	$("#ap1").html(pokemon1.ap);
 	$("#ap2").html(pokemon2.ap);
+	$("#df1").html(pokemon1.defense);
+	$("#df2").html(pokemon2.defense);
+	$("#p1Name").html(pokemon1.name);
+	$("#p2Name").html(pokemon2.name);
+	$("#p1Pokemon").attr("src", pokemon1.image_url);
+	$("#p2Pokemon").attr("src", pokemon2.image_url);
 }
 
 
@@ -128,23 +141,22 @@ var render = function() {
 	
 render();
 
-/*
-var turn = true;
+
 $("#board").on('click', 'button', function(evt){
 	var attacker, enemy;
 	var move = $(evt.target).html();
 	console.log("clicked!")
-	if(turn){
-		attacker = p1stats;
-		enemy = p2stats;
+	if(turn === 1){
+		attacker = pokemon1;
+		enemy = pokemon2;
 	}
 	else{
-		attacker = p2stats;
-		enemy = p1stats
+		attacker = pokemon2;
+		enemy = pokemon1;
 	}
 	if(move==="attack"){
 		battleCalculations(attacker, enemy);
-		$text.html("Your " + attacker.names + " used attack");
+		$text.html("Your " + attacker.name + " used attack");
 		$("#sp1").attr("disabled", false);
 
 
@@ -153,19 +165,20 @@ $("#board").on('click', 'button', function(evt){
 		attacker.special = 2;
 		battleCalculations(attacker,enemy);
 		$("#sp1").attr("disabled", true)
-		$text.html("Your " + attacker.names + " used special attack");
+		$text.html("Your " + attacker.name + " used special attack");
 	}
 	else {
 		attacker.block = .25;
-		$text.html("Your " + attacker.names + " used defend");
+		$text.html("Your " + attacker.name + " used defend");
 		$("#sp1").attr("disabled", false);
 
 	}
 	renderPlayers();
 	isWinner(enemy, attacker)
-	turn = !turn;
-	$("#p1Moves button").prop("disabled", !turn);
-	$("#p2Moves button").prop("disabled", turn);
+	turn ++;
+	if(turn===3){turn = 1;}
+	$("#p1Moves button").prop("disabled", (attacker === pokemon1));
+	$("#p2Moves button").prop("disabled", (attacker === pokemon2));
 })
 
 
@@ -176,17 +189,32 @@ $("#board").on('click', 'button', function(evt){
 // check winner funtion
 var isWinner = function(enemy, attacker){
 	if(enemy.hp<1){
-		if(enemy === p1stats){
-			$("#p1Pokemon").fadeOut(2000,playAgain);
+		if(enemy === pokemon1){
+			$("#p1Pokemon").fadeOut(1000,playAgain);
 		}
 		else {
-			$("#p2Pokemon").fadeOut(2000,playAgain);
+			$("#p2Pokemon").fadeOut(1000,playAgain);
 		}
+		var playerwins = attacker
 		$text.html("Player " + attacker.player + " is the winner!");
 		enemy.hp = 1;
 		
 		return true;
 	}
+}
+
+
+
+
+var battleCalculations = function(attacker, enemy){
+	var damage = Math.floor(5*attacker.ap*attacker.special*enemy.block / enemy.defense);
+
+	console.log( attacker, damage);
+	enemy.hp -= damage;
+	attacker.special=1;
+	enemy.block=1;
+	return (damage);
+
 }
 var playAgain= function(){
 	if(confirm('Do you want to play again?')){
@@ -194,7 +222,7 @@ var playAgain= function(){
 			$("#sp1").prop('disabled', false);
 			$("#p2Pokemon").attr("style", "");			
 			$("#p2Pokemon").attr("style", "");
-			playerChoose();
+			renderPlayerChooseMode();
 			console.log("this is happening")
 		}
 		else{
@@ -203,73 +231,16 @@ var playAgain= function(){
 			//add a button somewhere to play again
 		}
 }
+	
 
 
-// Auto choose player 2 for cpu
-var chooseCpu = function(){
-	var x = Math.random();
-	if(x<.25){
-		cpuChoice = 0;
-	}
-	else if(x<.5){
-		cpuChoice = 3;
-	}
-	else if(x<.75){
-		cpuChoice = 6;
-	}
-	else {
-		cpuChoice= 24;
-	};
-	//input the stats value in table for comp/player2
-	p2stats.hp= pokemon[cpuChoice].health;
-	p2stats.element= pokemon[cpuChoice].element;
-	p2stats.ap= pokemon[cpuChoice].attack;
-	p2stats.names = pokemon[cpuChoice].name;
-	p2stats.player = 2;
-	p2stats.special = 1;
-	p2stats.block = 1;
-	p2stats.defense = pokemon[cpuChoice].defense;
-	p2stats.choice = cpuChoice;
-	$('#hp2').html(pokemon[cpuChoice].health);
-	$('#ap2').html(pokemon[cpuChoice].attack);
-	$("#df2").html(pokemon[cpuChoice].defense);
-	$('#p2Pokemon').attr('src', pokemon[cpuChoice].image_url);
-	$('#p2Name').html(pokemon[cpuChoice].name);
-	$text.html("Player 1's turn")
-};
+
 
 //displays and saves values of the pokemon chosen by player 1
 
-var renderPlayerInitial = function(){
-// input stats for player 1
-	p1stats.hp = pokemon[p1Choice].health;
-	p1stats.ap = pokemon[p1Choice].attack;
-	p1stats.names = pokemon[p1Choice].name;
-	p1stats.player = 1;
-	p1stats.special = 1;
-	p1stats.defense = pokemon[p1Choice].defense;
-	p1stats.block = 1;
-	p1stats.choice = p1Choice;
-	$('#p1Name').html(pokemon[p1Choice].name);
-	$('#p1Pokemon').css('background: ' + pokemon[p1Choice].image_url);
-	$('#p1Pokemon').attr('src',pokemon[p1Choice].image_url);
-	$('#hp1').html(pokemon[p1Choice].health);
-	$('#ap1').html(pokemon[p1Choice].attack);
-	$("#df1").html(pokemon[p1Choice].defense);
-	useSpecial = true;
 
-}
 
 /// working on better battle algorithm 
-var battleCalculations = function(attacker, enemy){
-	var damage = Math.floor(5*attacker.ap*attacker.special*enemy.block / enemy.defense);
-	console.log( attacker, damage);
-	enemy.hp -= damage;
-	attacker.special=1;
-	enemy.block=1;
-	return (damage);
-
-}
 //special should not be used twice in a row
 //when used, make button disabled
 //enable again when any other move is used within that move.
@@ -295,4 +266,3 @@ var cpuMove= function(){
 	renderPlayers();
 	isWinner(p1stats, p2stats);
 }
-*/
