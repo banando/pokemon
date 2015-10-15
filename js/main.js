@@ -91,20 +91,29 @@ var battle = function(){
 // check winner funtion
 var isWinner = function(enemy, attacker){
 	if(enemy.hp<1){
-			$text.html("Player " + attacker.player + " is the winner!");
-			if(confirm('Do you want to play again?')){
-				//reload game
-				enemy.hp = 1;
-				$("#sp1").prop('disabled', false);			
-				playerChoose();
-				console.log("this is happening")
-			}
-			else{
-				console.log("something is wrong");
-				//disable buttons
-				//add a button somewhere to play again
-			}
-			return true;
+		if(enemy === p1stats){
+			$("#p1Pokemon").fadeOut(2000,playAgain);
+		}
+		else {
+			$("#p2Pokemon").fadeOut(2000,playAgain);
+		}
+		$text.html("Player " + attacker.player + " is the winner!");
+		enemy.hp = 1;
+		
+		return true;
+	}
+}
+var playAgain= function(){
+	if(confirm('Do you want to play again?')){
+			//reload game
+			$("#sp1").prop('disabled', false);			
+			playerChoose();
+			console.log("this is happening")
+		}
+		else{
+			console.log("something is wrong");
+			//disable buttons
+			//add a button somewhere to play again
 		}
 }
 
@@ -238,5 +247,4 @@ var cpuMove= function(){
 	renderPlayers();
 	isWinner(p1stats, p2stats);
 }
-$("#restart").on('click', playerChoose());
 battle();
