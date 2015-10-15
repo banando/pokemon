@@ -1,4 +1,4 @@
-var pokemon = 
+var pokemons = 
 [
   {
     "id": 1,

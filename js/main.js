@@ -1,61 +1,134 @@
 
 //charcater select
 console.log('main.js loaded');
-//This has to happen using player choice and then 
-//random for computer choice
-var p1Choice;
-var p1stats={};
-var p2stats = {};
-var restart = false;
-var $text = $("#textBox");
-var turn = true;
-//cpu chosen at 'random'
-var cpuChoice;
-
-//initialize pictures to choice options
-
-$("#pikachu").attr('src', pokemon[24].image_url);
-$("#squirtle").attr('src', pokemon[6].image_url);
-$("#charmander").attr('src', pokemon[3].image_url);
-$("#bulbasaur").attr('src', pokemon[0].image_url);
-
-/*var battle = function(){
-
-	$("#p1Moves").on('click', 'button', function(evt){
-//need to tweak to account for special and defense variable
-		var move = $(evt.target).html();
-		//resets attack in case defense was used
-		p2stats.ap= pokemon[cpuChoice].attack/2
-		if(move==="attack"){
-			p2stats.hp -=p1stats.ap;
-			useSpecial = true;
-			$text.html("Your " + p1stats.names + " used attack");
 
 
-		}
-		else if(move === "special"){
-			p2stats.hp -=p1stats.ap*1.5
-			useSpecial = false
-			$text.html("Your " + p1stats.names + " used special attack");
-		}
-		else {
-			p2stats.ap /= 2;
-			useSpecial = true;
-			$text.html("Your " + p1stats.names + " used defend");
-		}
-		if(!useSpecial){
-			$("#sp1").prop('disabled', true);
-		}
-		else{
-			$("#sp1").prop('disabled', false);			
-		}
-		renderPlayers();
-		isWinner(p2stats, p1stats)
-		setTimeout(cpuMove,2000);
-	})
+/* MODEL */
+
+var activePokemonIndices = [
+	24,
+	6,
+	3,
+	0,
+	38
+];
+
+var pokemon1 = {};
+var pokemon2 = {};
+var turn = 1;
+
+var choosePokemonMode = 1;
+var cpuBattleMode = true;
+
+/* HELPER / ACTION FUNCTIONS */
+
+var randomActivePokemon = function() {
+	var randomIndex = Math.floor(Math.random()*activePokemonIndices.length);
+	return pokemons[activePokemonIndices[randomIndex]];
 }
-*/
-// battle is currently player 1 turns
+
+var readyPokemonForBattle = function(p1, p2) {
+	p1.hp = p1.health;
+	p2.hp = p2.health;
+	p1.ap = p1.attack;
+	p1.ap = p1.attack;
+};
+
+/* CACHE DOM REFERENCES */
+var $text = $("#textBox");
+var $playerSelect = $("#playerSelect");
+
+/* EVENT LISTENERS */
+
+var selectPokemon = function(evt) {
+	console.log('selected');
+	var pokemonIndex = activePokemonIndices[this.id.slice(-1)];
+	
+	if (cpuBattleMode) {
+		pokemon1 = pokemons[pokemonIndex];
+		// randomly set pokemon2
+		pokemon2 = randomActivePokemon();
+		// change to battle mode
+        choosePokemonMode = false;
+	} else {
+		if (choosePokemonMode === 1) {
+			pokemon1 = pokemons[pokemonIndex];
+			choosePokemonMode = 2;
+		} else {
+			pokemon2 = pokemons[pokemonIndex];
+			choosePokemonMode = false;
+		}
+	}
+
+	readyPokemonForBattle(pokemon1, pokemon2);
+	render();
+};
+
+
+/* RENDER */
+
+var renderPlayerChooseMode = function() {
+	$playerSelect.html("<h1>Choose your starting <span>Pokemon</span></h1>");
+
+	// build the html for each pokemon choice
+	for (var i = 0; i < activePokemonIndices.length; i++) {
+		var currentPokemon = pokemons[activePokemonIndices[i]];
+
+		var $table = $("<table>", {id: "active-pokemon" + i, class: "selection"});
+		$table.append($("<img>", {src: currentPokemon.image_url, class: "choice-pic"}));
+
+		$table.append($("<tr>").append(
+			$("<td>", {text: "Name"}),
+			$("<td>", {text: currentPokemon.name})
+		));
+
+		$table.append($("<tr>").append(
+			$("<td>", {text: "Health"}),
+			$("<td>", {text: currentPokemon.health})
+		));
+
+		$table.append($("<tr>").append(
+			$("<td>", {text: "Attack"}),
+			$("<td>", {text: currentPokemon.attack})
+		));
+
+		$table.append($("<tr>").append(
+			$("<td>", {text: "Defense"}),
+			$("<td>", {text: currentPokemon.defense})
+		));
+		
+		$playerSelect.append($table);
+	};
+
+	$("table.selection").on('click', selectPokemon);
+
+	$("#board").css('display', 'none');
+    // setTimeout(chooseCpu,1000);
+};
+
+// shortcut to render each player
+var renderPlayers = function(){
+	$('#hp1').html(pokemon1.hp + " / " + pokemon1.health);
+	$('#hp2').html(pokemon2.hp + " / " + pokemon2.health);
+	$("#ap1").html(pokemon1.ap);
+	$("#ap2").html(pokemon2.ap);
+}
+
+
+var render = function() {
+	if (choosePokemonMode) {
+		renderPlayerChooseMode();
+	} else {
+		// battle mode
+		$("#board").css('display', '');
+		renderPlayers();
+	}
+}
+
+	
+render();
+
+/*
 var turn = true;
 $("#board").on('click', 'button', function(evt){
 	var attacker, enemy;
@@ -131,38 +204,7 @@ var playAgain= function(){
 		}
 }
 
-//valid pokemon choices are 1,3,6, or 24.
-// Initiate game and restart game
-var playerChoose= function(){
-	$("#board").css('display', 'none');
-	$(".choicePic").on('click', function(evt){
-		console.log(evt.target.id);
-		p1Choice = null;
 
-		switch (evt.target.id){
-			case "bulbasaur": 
-				p1Choice = 0;
-				break;
-			case "squirtle":
-				p1Choice = 6;
-				break;
-			case "charmander":
-				p1Choice = 3;
-				break;
-			case "pikachu":
-				p1Choice = 24;
-				break;
-		}
-		if(p1Choice!==null){
-			$("#board").css('display','');
-			renderPlayerInitial();
-			$(".choicePic").off();
-		}else {p1Choice[2];}
-
-	})
-	setTimeout(chooseCpu,1000);
-
-}
 // Auto choose player 2 for cpu
 var chooseCpu = function(){
 	var x = Math.random();
@@ -197,7 +239,7 @@ var chooseCpu = function(){
 };
 
 //displays and saves values of the pokemon chosen by player 1
-playerChoose();
+
 var renderPlayerInitial = function(){
 // input stats for player 1
 	p1stats.hp = pokemon[p1Choice].health;
@@ -218,15 +260,7 @@ var renderPlayerInitial = function(){
 
 }
 
-//shortcut to render each player
-var renderPlayers = function(){
-	$('#hp1').html(p1stats.hp + " / " + pokemon[p1Choice].health);
-	$('#hp2').html(p2stats.hp + " / " + pokemon[cpuChoice].health);
-	$("#ap1").html(p1stats.ap);
-	$("#ap2").html(p2stats.ap);
-
-}
-// working on better battle algorithm 
+/// working on better battle algorithm 
 var battleCalculations = function(attacker, enemy){
 	var damage = Math.floor(5*attacker.ap*attacker.special*enemy.block / enemy.defense);
 	console.log( attacker, damage);
@@ -261,3 +295,4 @@ var cpuMove= function(){
 	renderPlayers();
 	isWinner(p1stats, p2stats);
 }
+*/
