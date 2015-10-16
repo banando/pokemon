@@ -42,9 +42,21 @@ This is an ode to the old school pokemon games played on portable gaming devices
 - [ ] As a user I want a story mode
 
 
-A readme.md file with:
-a description of your game ([Use Your Game's Name])
-lists and explanations of the technologies used (Technologies),
-the design approach taken (Design),
-installation instructions (Get Started), and
-unsolved problems and/or planned features (Next Steps).
+
+
+##### Technologies  #####
+This website game uses Javascript with jquery v.2.1.4, along with css3 and html5.
+
+##### Design#####
+My design was based heavily on the old gameboy battle mode. I used to main battle segment built into my html using tables, images, buttons, and articles. My choose pokemon prompt was built in javascript using jquery dom manipulation. 
+
+##### Get Started #####
+To start the game you just have to choose 1 pokemon for each of the 2 players. then the battle mode starts and you use the given moves to start the battle.
+
+##### Next Steps #####
+
+- Then cpu mode is built in but disabled at the moment. 
+- Animation was something I just didn't find the time to really attempt. 
+- I would love to add some background story before the fight to get people invested in the battle.
+- I want to add more dynamics to the battle calculations to account for elements of pokemon and later level as well
+
