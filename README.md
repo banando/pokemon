@@ -42,3 +42,9 @@ This is an ode to the old school pokemon games played on portable gaming devices
 - [ ] As a user I want a story mode
 
 
+A readme.md file with:
+a description of your game ([Use Your Game's Name])
+lists and explanations of the technologies used (Technologies),
+the design approach taken (Design),
+installation instructions (Get Started), and
+unsolved problems and/or planned features (Next Steps).
