@@ -1,16 +1,16 @@
 body {
 	text-align: center;
-	background:  url('../assets/pokeBackground2.jpg');
+	background:  url('assets/pokeBackground2.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	position: relative;
 }
 @font-face {
     font-family: gba;
-    src: url('../assets/earlyGameBoy.ttf');
+    src: url('assets/earlyGameBoy.ttf');
 }
  @font-face { font-family: pokemon;
-    src: url('../assets/PokemonHollow.ttf');
+    src: url('assets/PokemonHollow.ttf');
 }
 
 #board , #plyerSelect{
@@ -47,7 +47,7 @@ body {
 	} 
 #textBox{
 	font-family: gba;
-	background-image: url("../assets/pokemonTextBox.png");
+	background-image: url("assets/pokemonTextBox.png");
 	background-size: contain;
 	background-repeat: no-repeat;;
 	position: absolute;

@@ -14,7 +14,6 @@ var activePokemonIndices = [
 	11,
 	15,
 	51,
-	64
 ];
 
 var pokemon1 = {};
