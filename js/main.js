@@ -39,6 +39,8 @@ var readyPokemonForBattle = function(p1, p2) {
 	p1.block = p2.block = 1;
 	p1.special = p2.special = 1;
 	p1.usedSpecial = p2.usedSpecial = false;
+	p1.player = 1;
+	p2.player = 2;
 };
 
 /* CACHE DOM REFERENCES */
@@ -162,19 +164,19 @@ $("#board").on('click', 'button', function(evt){
 	}
 	if(move==="attack"){
 		battleCalculations(attacker, enemy);
-		$text.html("Your " + attacker.name + " used attack");
+		$text.html("player " + attacker.player+ "'s " + attacker.name + " used attack");
 		attacker.usedSpecial = false
 
 	}
 	else if(move === "special"){
 		attacker.special = 2;
 		battleCalculations(attacker,enemy);
-		$text.html("Your " + attacker.name + " used special attack");
+		$text.html("player " + attacker.player+ "'s " + attacker.name + " used special attack");
 		attacker.usedSpecial = true;
 	}
 	else {
 		attacker.block = .25;
-		$text.html("Your " + attacker.name + " used defend");
+		$text.html("player " + attacker.player+ "'s " + attacker.name + " used defend");
 		attacker.usedSpecial = false;
 	}
 	renderPlayers();
