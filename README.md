@@ -1,7 +1,11 @@
 # Pokemon Battle!  
 This is an ode to the old school pokemon games played on portable gaming devices back in my high school days. The object of the game is to defeat the other players pokemon. You start by each choosing your pokemon. once the selection process is done, you move on to the battle segment. the battle is a turn based game with 1 move per turn, depending on the speed of the pokemon. You have a set move list available to you specific to your chosen pokemon. The first player to gets his opponent's pokemon to zero first wins the game. 
 
+##### Technologies  #####
+This website game uses Javascript with jquery v.2.1.4, along with css3 and html5.
 
+##### Design#####
+My design was based heavily on the old gameboy battle mode. I used to main battle segment built into my html using tables, images, buttons, and articles. My choose pokemon prompt was built in javascript using jquery dom manipulation. 
 
 
 ##user stories
@@ -44,11 +48,7 @@ This is an ode to the old school pokemon games played on portable gaming devices
 
 
 
-##### Technologies  #####
-This website game uses Javascript with jquery v.2.1.4, along with css3 and html5.
 
-##### Design#####
-My design was based heavily on the old gameboy battle mode. I used to main battle segment built into my html using tables, images, buttons, and articles. My choose pokemon prompt was built in javascript using jquery dom manipulation. 
 
 ##### Get Started #####
 To start the game you just have to choose 1 pokemon for each of the 2 players. then the battle mode starts and you use the given moves to start the battle.
