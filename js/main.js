@@ -5,16 +5,20 @@ console.log('main.js loaded');
 
 /* MODEL */
 
-var activePokemonIndices = [
-	24,
-	6,
-	3,
-	0,
-	38,
-	11,
-	15,
-	51,
-];
+ var activePokemonIndices = [];
+// 	24,1,2,4,5,7,8,10,11,12,13,14,15,16,17,
+// 	6,
+// 	3,
+// 	0,
+// 	38,
+// 	11,
+// 	15,
+// 	51,
+// ];
+for (var i = 0; i < 149; i++) {
+	activePokemonIndices.push(i);
+
+};
 
 var pokemon1 = {};
 var pokemon2 = {};
@@ -51,7 +55,7 @@ var $playerSelect = $("#playerSelect");
 var selectPokemon = function(evt) {
 	console.log('selected');
 	var pokemonIndex = activePokemonIndices[this.id.slice(-1)];
-	
+	console.log(this.id)
 	if (cpuBattleMode) {
 		pokemon1 = pokemons[pokemonIndex];
 		// randomly set pokemon2
@@ -60,9 +64,9 @@ var selectPokemon = function(evt) {
         choosePokemonMode = false;
 	} else {
 		if (choosePokemonMode === 1) {
-			pokemon1 = pokemons[pokemonIndex];
 			$("#playerSelect span").first().html("2");
-			console.log("player 2 chooses");
+			pokemon1 = pokemons[pokemonIndex];
+			console.log(pokemon1);
 			choosePokemonMode = 2;
 		} else {
 			pokemon2 = pokemons[pokemonIndex];
