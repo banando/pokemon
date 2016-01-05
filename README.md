@@ -1,6 +1,6 @@
 # Pokemon Battle!  
 This is an ode to the old school pokemon games played on portable gaming devices back in my high school days. The object of the game is to defeat the other players pokemon. You start by each choosing your pokemon. once the selection process is done, you move on to the battle segment. the battle is a turn based game with 1 move per turn, depending on the speed of the pokemon. You have a set move list available to you specific to your chosen pokemon. The first player to gets his opponent's pokemon to zero first wins the game. 
-
+![screenshot](./assets/screenshot.png)
 ##### Technologies  #####
 This website game uses Javascript with jquery v.2.1.4, along with css3 and html5.
 
