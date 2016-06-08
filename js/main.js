@@ -53,8 +53,9 @@ var $playerSelect = $("#playerSelect");
 /* EVENT LISTENERS */
 
 var selectPokemon = function(evt) {
-	console.log('selected');
-	var pokemonIndex = activePokemonIndices[this.id.slice(-1)];
+  console.log('selected');
+	console.log('this', this);
+	var pokemonIndex = activePokemonIndices[this.id.replace(/\D/g, '')];
 	console.log(this.id)
 	if (cpuBattleMode) {
 		pokemon1 = pokemons[pokemonIndex];
@@ -111,7 +112,7 @@ var renderPlayerChooseMode = function() {
 			$("<td>", {text: "Defense"}),
 			$("<td>", {text: currentPokemon.defense})
 		));
-		
+
 		$playerSelect.append($table);
 	};
 
@@ -146,7 +147,7 @@ var render = function() {
 	}
 }
 
-	
+
 render();
 
 
@@ -207,7 +208,7 @@ var isWinner = function(enemy, attacker){
 		var playerwins = attacker
 		$text.html("Player " + attacker.player + " is the winner!");
 		enemy.hp = 1;
-		
+
 		return true;
 	}
 }
@@ -229,7 +230,7 @@ var playAgain= function(){
 	if(confirm('Do you want to play again?')){
 			//reload game
 			$("#sp1").prop('disabled', false);
-			$("#p2Pokemon").attr("style", "");			
+			$("#p2Pokemon").attr("style", "");
 			$("#p1Pokemon").attr("style", "");
 			choosePokemonMode = 1;
 			renderPlayerChooseMode();
@@ -241,7 +242,7 @@ var playAgain= function(){
 			//add a button somewhere to play again
 		}
 }
-	
+
 
 
 
@@ -250,7 +251,7 @@ var playAgain= function(){
 
 
 
-/// working on better battle algorithm 
+/// working on better battle algorithm
 //special should not be used twice in a row
 //when used, make button disabled
 //enable again when any other move is used within that move.
